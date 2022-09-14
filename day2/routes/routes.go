@@ -9,6 +9,10 @@ func New() *echo.Echo {
 	e := echo.New()
 	v1 := e.Group("/v1")
 
+	//Api Book
+	v1.GET("/books", controllers.GetBooksControllers)
+	v1.POST("/books", controllers.CreateBookControllers)
+
 	//Api User
 	v1.GET("/users", controllers.GetUserControllers)
 	v1.POST("/users", controllers.CreateUserControllers)
