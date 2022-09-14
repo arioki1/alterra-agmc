@@ -70,3 +70,40 @@ func GetUserByIdControllers(c echo.Context) error {
 		"user":   users,
 	})
 }
+
+func UpdateUserByIdControllers(c echo.Context) error {
+	idParams := c.Param("id")
+	id, err := strconv.Atoi(idParams)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"status": "Invalid params",
+			"user":   nil,
+		})
+	}
+
+	var user models.Users
+	if err := c.Bind(&user); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"status": "Invalid JSON body",
+			"users":  nil,
+		})
+	}
+	newUser := new(models.Users)
+	newUser.ID = uint(id)
+	newUser.Name = user.Name
+	newUser.Email = user.Email
+	newUser.Password = user.Password
+
+	result, e := database.UpdateUsers(newUser)
+	if e != nil {
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"status": e.Error(),
+			"user":   nil,
+		})
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"status": "success",
+		"user":   result,
+	})
+}
