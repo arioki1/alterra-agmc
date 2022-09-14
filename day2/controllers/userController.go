@@ -4,6 +4,7 @@ import (
 	"github.com/arioki1/alterra-agmc/day2/lib/database"
 	"github.com/arioki1/alterra-agmc/day2/models"
 	"net/http"
+	"strconv"
 
 	"github.com/labstack/echo"
 )
@@ -43,5 +44,29 @@ func CreateUserControllers(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"status": "created",
 		"users":  users,
+	})
+}
+
+func GetUserByIdControllers(c echo.Context) error {
+	idParams := c.Param("id")
+	id, err := strconv.Atoi(idParams)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"status": "Invalid params",
+			"user":   nil,
+		})
+	}
+
+	users, e := database.GetUserById(&id)
+	if e != nil {
+		if e.Error() == "record not found" {
+			return echo.NewHTTPError(http.StatusBadRequest, "user not found")
+		} else {
+			return echo.NewHTTPError(http.StatusInternalServerError, e.Error())
+		}
+	}
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"status": "success",
+		"user":   users,
 	})
 }

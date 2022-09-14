@@ -12,6 +12,7 @@ func New() *echo.Echo {
 	//Api User
 	v1.GET("/users", controllers.GetUserControllers)
 	v1.POST("/users", controllers.CreateUserControllers)
+	v1.GET("/users/:id", controllers.GetUserByIdControllers)
 
 	return e
 }

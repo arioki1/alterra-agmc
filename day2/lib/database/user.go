@@ -20,3 +20,11 @@ func CreateUsers(user *models.Users) (*models.Users, error) {
 	}
 	return user, nil
 }
+
+func GetUserById(id *int) (*models.Users, error) {
+	user := new(models.Users)
+	if e := config.DB.Where("id = ?", id).First(user).Error; e != nil {
+		return nil, e
+	}
+	return user, nil
+}
