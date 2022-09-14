@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/arioki1/alterra-agmc/config"
-	"github.com/arioki1/alterra-agmc/routes"
+	"github.com/arioki1/alterra-agmc/day2/config"
+	"github.com/arioki1/alterra-agmc/day2/routes"
 )
 
 func init() {

@@ -1,4 +1,4 @@
-module github.com/arioki1/alterra-agmc
+module github.com/arioki1/alterra-agmc/day2
 
 go 1.18
 

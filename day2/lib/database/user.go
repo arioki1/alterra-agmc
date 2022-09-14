@@ -1,15 +1,22 @@
 package database
 
 import (
-	"github.com/arioki1/alterra-agmc/config"
-	"github.com/arioki1/alterra-agmc/models"
+	"github.com/arioki1/alterra-agmc/day2/config"
+	"github.com/arioki1/alterra-agmc/day2/models"
 )
 
-func GetUsers() (interface{}, error) {
+func GetUsers() (*[]models.Users, error) {
 	var users []models.Users
 
 	if e := config.DB.Find(&users).Error; e != nil {
 		return nil, e
 	}
-	return users, nil
+	return &users, nil
+}
+
+func CreateUsers(user *models.Users) (*models.Users, error) {
+	if e := config.DB.Create(&user).Error; e != nil {
+		return nil, e
+	}
+	return user, nil
 }

@@ -2,7 +2,7 @@ package config
 
 import (
 	"fmt"
-	"github.com/arioki1/alterra-agmc/models"
+	"github.com/arioki1/alterra-agmc/day2/models"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
