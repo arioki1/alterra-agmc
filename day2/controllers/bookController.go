@@ -116,3 +116,29 @@ func UpdateBookByIdControllers(c echo.Context) error {
 		"book":   nil,
 	})
 }
+
+func DeleteBookByIdControllers(c echo.Context) error {
+	idParams := c.Param("id")
+	id, err := strconv.Atoi(idParams)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"status": "Invalid params",
+			"user":   nil,
+		})
+	}
+
+	for i, book := range books {
+		if book.Id == id {
+			books = append(books[:i], books[i+1:]...)
+			return c.JSON(http.StatusOK, map[string]interface{}{
+				"status": "deleted",
+				"book":   book,
+			})
+		}
+	}
+
+	return c.JSON(http.StatusBadRequest, map[string]interface{}{
+		"status": "book not found",
+		"book":   nil,
+	})
+}

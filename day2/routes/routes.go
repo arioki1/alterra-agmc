@@ -14,6 +14,7 @@ func New() *echo.Echo {
 	v1.POST("/books", controllers.CreateBookControllers)
 	v1.GET("/books/:id", controllers.GetBookByIdControllers)
 	v1.PUT("/books/:id", controllers.UpdateBookByIdControllers)
+	v1.DELETE("/books/:id", controllers.DeleteBookByIdControllers)
 
 	//Api User
 	v1.GET("/users", controllers.GetUserControllers)
