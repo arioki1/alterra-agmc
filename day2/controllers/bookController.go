@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/arioki1/alterra-agmc/day2/models"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/labstack/echo"
@@ -43,5 +44,30 @@ func CreateBookControllers(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"status": "created",
 		"books":  book,
+	})
+}
+
+func GetBookByIdControllers(c echo.Context) error {
+	idParams := c.Param("id")
+	id, err := strconv.Atoi(idParams)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"status": "Invalid params",
+			"user":   nil,
+		})
+	}
+
+	for _, book := range books {
+		if book.Id == id {
+			return c.JSON(http.StatusOK, map[string]interface{}{
+				"status": "success",
+				"book":   book,
+			})
+		}
+	}
+
+	return c.JSON(http.StatusBadRequest, map[string]interface{}{
+		"status": "book not found",
+		"book":   nil,
 	})
 }
