@@ -24,7 +24,7 @@ func CreateBookControllers(c echo.Context) error {
 	if err := c.Bind(&book); err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
 			"status": "Invalid JSON body",
-			"users":  nil,
+			"book":   nil,
 		})
 	}
 	lastBookId++
@@ -62,6 +62,51 @@ func GetBookByIdControllers(c echo.Context) error {
 			return c.JSON(http.StatusOK, map[string]interface{}{
 				"status": "success",
 				"book":   book,
+			})
+		}
+	}
+
+	return c.JSON(http.StatusBadRequest, map[string]interface{}{
+		"status": "book not found",
+		"book":   nil,
+	})
+}
+
+func UpdateBookByIdControllers(c echo.Context) error {
+	idParams := c.Param("id")
+	id, err := strconv.Atoi(idParams)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"status": "Invalid params",
+			"book":   nil,
+		})
+	}
+
+	var book models.Book
+	if err := c.Bind(&book); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"status": "Invalid JSON body",
+			"users":  nil,
+		})
+	}
+
+	for i, b := range books {
+		if b.Id == id {
+			if book.Title != "" {
+				books[i].Title = book.Title
+			}
+			if book.Isbn != "" {
+				books[i].Isbn = book.Isbn
+			}
+			if book.Writer != "" {
+				books[i].Writer = book.Writer
+			}
+
+			books[i].UpdatedAt = time.Now()
+
+			return c.JSON(http.StatusOK, map[string]interface{}{
+				"status": "updated",
+				"book":   books[i],
 			})
 		}
 	}
