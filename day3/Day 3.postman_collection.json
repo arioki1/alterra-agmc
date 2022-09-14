@@ -1,0 +1,763 @@
+{
+	"info": {
+		"_postman_id": "c512b256-9353-4753-a334-7ad7de33f387",
+		"name": "Day 3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6490683"
+	},
+	"item": [
+		{
+			"name": "v1/books",
+			"item": [
+				{
+					"name": "{book id}",
+					"item": [
+						{
+							"name": "v1GetBookById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/books/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"books",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "v1GetBookById",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/v1/books/:id",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"v1",
+												"books",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 14 Sep 2022 01:59:03 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "218"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"book\": {\n        \"created_at\": \"2022-09-14T08:58:50.950542+07:00\",\n        \"updated_at\": \"2022-09-14T08:58:50.950543+07:00\",\n        \"id\": 1,\n        \"title\": \"Judul Buku 2\",\n        \"isbn\": \"1-234-5678-9101112-1\",\n        \"writer\": \"Fundamental REST API\"\n    },\n    \"status\": \"success\"\n}"
+								}
+							]
+						},
+						{
+							"name": "v1UpdateBookById",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Judul Buku 22222\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/books/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"books",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "v1UpdateBookById",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"title\": \"Judul Buku 22222\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/v1/books/:id",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"v1",
+												"books",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "3"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 14 Sep 2022 02:08:19 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "222"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"book\": {\n        \"created_at\": \"2022-09-14T09:06:41.982596+07:00\",\n        \"updated_at\": \"2022-09-14T09:08:19.277398+07:00\",\n        \"id\": 3,\n        \"title\": \"Judul Buku 22222\",\n        \"isbn\": \"1-234-5678-9101112-1\",\n        \"writer\": \"Fundamental REST API\"\n    },\n    \"status\": \"updated\"\n}"
+								}
+							]
+						},
+						{
+							"name": "v1DeleteBookById",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/books/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"books",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "v1DeleteBookById",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/v1/books/:id",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"v1",
+												"books",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "3"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 14 Sep 2022 02:22:04 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "218"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"book\": {\n        \"created_at\": \"2022-09-14T09:21:28.485607+07:00\",\n        \"updated_at\": \"2022-09-14T09:21:28.485607+07:00\",\n        \"id\": 3,\n        \"title\": \"Judul Buku 2\",\n        \"isbn\": \"1-234-5678-9101112-1\",\n        \"writer\": \"Fundamental REST API\"\n    },\n    \"status\": \"deleted\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "v1GetBooks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/books",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"books"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "v1GetBooks",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/books",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"books"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Sep 2022 01:52:53 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1932"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"books\": [\n        {\n            \"created_at\": \"2022-09-14T08:52:44.503869+07:00\",\n            \"updated_at\": \"2022-09-14T08:52:44.503878+07:00\",\n            \"id\": 1,\n            \"title\": \"Judul Buku 2\",\n            \"isbn\": \"1-234-5678-9101112-1\",\n            \"writer\": \"Fundamental REST API\"\n        },\n        {\n            \"created_at\": \"2022-09-14T08:52:45.313225+07:00\",\n            \"updated_at\": \"2022-09-14T08:52:45.313225+07:00\",\n            \"id\": 2,\n            \"title\": \"Judul Buku 2\",\n            \"isbn\": \"1-234-5678-9101112-1\",\n            \"writer\": \"Fundamental REST API\"\n        },\n        {\n            \"created_at\": \"2022-09-14T08:52:45.856604+07:00\",\n            \"updated_at\": \"2022-09-14T08:52:45.856605+07:00\",\n            \"id\": 3,\n            \"title\": \"Judul Buku 2\",\n            \"isbn\": \"1-234-5678-9101112-1\",\n            \"writer\": \"Fundamental REST API\"\n        },\n        {\n            \"created_at\": \"2022-09-14T08:52:46.298772+07:00\",\n            \"updated_at\": \"2022-09-14T08:52:46.298772+07:00\",\n            \"id\": 4,\n            \"title\": \"Judul Buku 2\",\n            \"isbn\": \"1-234-5678-9101112-1\",\n            \"writer\": \"Fundamental REST API\"\n        },\n        {\n            \"created_at\": \"2022-09-14T08:52:48.079076+07:00\",\n            \"updated_at\": \"2022-09-14T08:52:48.079076+07:00\",\n            \"id\": 5,\n            \"title\": \"Judul Buku 2\",\n            \"isbn\": \"1-234-5678-9101112-1\",\n            \"writer\": \"Fundamental REST API\"\n        },\n        {\n            \"created_at\": \"2022-09-14T08:52:48.544627+07:00\",\n            \"updated_at\": \"2022-09-14T08:52:48.544627+07:00\",\n            \"id\": 6,\n            \"title\": \"Judul Buku 2\",\n            \"isbn\": \"1-234-5678-9101112-1\",\n            \"writer\": \"Fundamental REST API\"\n        },\n        {\n            \"created_at\": \"2022-09-14T08:52:49.252293+07:00\",\n            \"updated_at\": \"2022-09-14T08:52:49.252293+07:00\",\n            \"id\": 7,\n            \"title\": \"Judul Buku 2\",\n            \"isbn\": \"1-234-5678-9101112-1\",\n            \"writer\": \"Fundamental REST API\"\n        },\n        {\n            \"created_at\": \"2022-09-14T08:52:49.680173+07:00\",\n            \"updated_at\": \"2022-09-14T08:52:49.680173+07:00\",\n            \"id\": 8,\n            \"title\": \"Judul Buku 2\",\n            \"isbn\": \"1-234-5678-9101112-1\",\n            \"writer\": \"Fundamental REST API\"\n        },\n        {\n            \"created_at\": \"2022-09-14T08:52:50.339224+07:00\",\n            \"updated_at\": \"2022-09-14T08:52:50.339224+07:00\",\n            \"id\": 9,\n            \"title\": \"Judul Buku 2\",\n            \"isbn\": \"1-234-5678-9101112-1\",\n            \"writer\": \"Fundamental REST API\"\n        },\n        {\n            \"created_at\": \"2022-09-14T08:52:50.939113+07:00\",\n            \"updated_at\": \"2022-09-14T08:52:50.939114+07:00\",\n            \"id\": 10,\n            \"title\": \"Judul Buku 2\",\n            \"isbn\": \"1-234-5678-9101112-1\",\n            \"writer\": \"Fundamental REST API\"\n        }\n    ],\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "v1CreateBook",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Judul Buku 2\",\n    \"isbn\": \"1-234-5678-9101112-1\",\n    \"writer\": \"Fundamental REST API\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/books",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"books"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "v1CreateBook",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Judul Buku 2\",\n    \"isbn\": \"1-234-5678-9101112-1\",\n    \"writer\": \"Fundamental REST API\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/books",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"books"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Sep 2022 01:51:01 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "217"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"books\": {\n        \"created_at\": \"2022-09-14T08:51:01.31194+07:00\",\n        \"updated_at\": \"2022-09-14T08:51:01.31194+07:00\",\n        \"id\": 1,\n        \"title\": \"Judul Buku 2\",\n        \"isbn\": \"1-234-5678-9101112-1\",\n        \"writer\": \"Fundamental REST API\"\n    },\n    \"status\": \"created\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "v1/users",
+			"item": [
+				{
+					"name": "{user id}",
+					"item": [
+						{
+							"name": "v1GetUserById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/users/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "v1GetUserById",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/v1/users/:id",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"v1",
+												"users",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "3"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 14 Sep 2022 00:57:15 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "198"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"user\": {\n        \"ID\": 3,\n        \"CreatedAt\": \"2022-09-14T07:20:47.094+07:00\",\n        \"UpdatedAt\": \"2022-09-14T07:20:47.094+07:00\",\n        \"DeletedAt\": null,\n        \"name\": \"yoga\",\n        \"email\": \"test@mail.com\",\n        \"password\": \"1234\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "v1UpdateUserById",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"password\": \"p4w5\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/users/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "v1UpdateUserById",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"password\": \"p4w5\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/v1/users/:id",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"v1",
+												"users",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 14 Sep 2022 01:27:19 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "198"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"user\": {\n        \"ID\": 1,\n        \"CreatedAt\": \"2022-09-14T07:15:18.956+07:00\",\n        \"UpdatedAt\": \"2022-09-14T08:27:19.298+07:00\",\n        \"DeletedAt\": null,\n        \"name\": \"yoga\",\n        \"email\": \"test@mail.com\",\n        \"password\": \"p4w5\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "v1DeleteUserById",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/users/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "v1DeleteUserById",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/v1/users/:id",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"v1",
+												"users",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "3"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 14 Sep 2022 01:35:55 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "33"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"deleted\",\n    \"user\": null\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "v1GetUsers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "v1GetUsers",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/users",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Sep 2022 01:34:25 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "354"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"users\": [\n        {\n            \"ID\": 2,\n            \"CreatedAt\": \"2022-09-14T07:18:10.738+07:00\",\n            \"UpdatedAt\": \"2022-09-14T07:18:10.738+07:00\",\n            \"DeletedAt\": null,\n            \"name\": \"\",\n            \"email\": \"\",\n            \"password\": \"1234\"\n        },\n        {\n            \"ID\": 3,\n            \"CreatedAt\": \"2022-09-14T07:20:47.094+07:00\",\n            \"UpdatedAt\": \"2022-09-14T07:20:47.094+07:00\",\n            \"DeletedAt\": null,\n            \"name\": \"yoga\",\n            \"email\": \"test@mail.com\",\n            \"password\": \"1234\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "v1CreateUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"yoga\",\r\n    \"email\":\"test@mail.com\",\r\n    \"password\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "v1CreateUser",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"yoga\",\r\n    \"email\":\"test@mail.com\",\r\n    \"password\": \"1234\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/users",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Sep 2022 00:20:47 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "199"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"created\",\n    \"users\": {\n        \"ID\": 3,\n        \"CreatedAt\": \"2022-09-14T07:20:47.094+07:00\",\n        \"UpdatedAt\": \"2022-09-14T07:20:47.094+07:00\",\n        \"DeletedAt\": null,\n        \"name\": \"yoga\",\n        \"email\": \"test@mail.com\",\n        \"password\": \"1234\"\n    }\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
