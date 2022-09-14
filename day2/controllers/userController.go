@@ -94,7 +94,7 @@ func UpdateUserByIdControllers(c echo.Context) error {
 	newUser.Email = user.Email
 	newUser.Password = user.Password
 
-	result, e := database.UpdateUsers(newUser)
+	result, e := database.UpdateUser(newUser)
 	if e != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
 			"status": e.Error(),
@@ -105,5 +105,28 @@ func UpdateUserByIdControllers(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"status": "success",
 		"user":   result,
+	})
+}
+
+func DeleteUserByIdControllers(c echo.Context) error {
+	idParams := c.Param("id")
+	id, err := strconv.Atoi(idParams)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"status": "Invalid params",
+			"user":   nil,
+		})
+	}
+
+	if e := database.DeleteUser(&id); e != nil {
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"status": e.Error(),
+			"user":   nil,
+		})
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"status": "deleted",
+		"user":   nil,
 	})
 }

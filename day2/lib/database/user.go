@@ -35,7 +35,7 @@ func GetUserById(id *int) (*models.Users, error) {
 	return user, nil
 }
 
-func UpdateUsers(user *models.Users) (*models.Users, error) {
+func UpdateUser(user *models.Users) (*models.Users, error) {
 	db := config.DB.
 		Where("id = ?", user.ID).
 		Updates(user).
@@ -48,4 +48,18 @@ func UpdateUsers(user *models.Users) (*models.Users, error) {
 	}
 
 	return user, nil
+}
+
+func DeleteUser(id *int) error {
+	db := config.DB.
+		Where("id = ?", id).
+		Delete(&models.Users{})
+
+	if db.RowsAffected < 1 {
+		return fmt.Errorf("row with id=%v  cannot be delete because it doesn't exist", *id)
+	} else if db.Error != nil {
+		return db.Error
+	}
+
+	return nil
 }
