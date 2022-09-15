@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c512b256-9353-4753-a334-7ad7de33f387",
+		"_postman_id": "ec05ff17-ed24-4296-a6c6-3c660f5f25e7",
 		"name": "Day 3",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "6490683"
@@ -84,6 +84,16 @@
 						{
 							"name": "v1UpdateBookById",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "PUT",
 								"header": [],
 								"body": {
@@ -171,6 +181,16 @@
 						{
 							"name": "v1DeleteBookById",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "DELETE",
 								"header": [],
 								"url": {
@@ -297,6 +317,16 @@
 				{
 					"name": "v1CreateBook",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -378,6 +408,16 @@
 						{
 							"name": "v1GetUserById",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -393,7 +433,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "3"
+											"value": "4"
 										}
 									]
 								}
@@ -447,6 +487,16 @@
 						{
 							"name": "v1UpdateUserById",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "PUT",
 								"header": [],
 								"body": {
@@ -528,12 +578,74 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"status\": \"success\",\n    \"user\": {\n        \"ID\": 1,\n        \"CreatedAt\": \"2022-09-14T07:15:18.956+07:00\",\n        \"UpdatedAt\": \"2022-09-14T08:27:19.298+07:00\",\n        \"DeletedAt\": null,\n        \"name\": \"yoga\",\n        \"email\": \"test@mail.com\",\n        \"password\": \"p4w5\"\n    }\n}"
+								},
+								{
+									"name": "v1UpdateUserById",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"password\": \"p4w5\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/v1/users/:id",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"v1",
+												"users",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 15 Sep 2022 14:47:49 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "57"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"you can edit your own data only\",\n    \"user\": null\n}"
 								}
 							]
 						},
 						{
 							"name": "v1DeleteUserById",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "DELETE",
 								"header": [],
 								"url": {
@@ -597,6 +709,49 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"status\": \"deleted\",\n    \"user\": null\n}"
+								},
+								{
+									"name": "v1DeleteUserById",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/v1/users/:id",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"v1",
+												"users",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "4"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 15 Sep 2022 14:46:35 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "59"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"you can delete your own data only\",\n    \"user\": null\n}"
 								}
 							]
 						}
@@ -605,6 +760,16 @@
 				{
 					"name": "v1GetUsers",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -731,6 +896,96 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "v1/login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"save jwt token\", function () {",
+							"   if (pm.response.code == 200) {",
+							"    let data = pm.response.json()",
+							"    let token = data.users.token",
+							"    pm.collectionVariables.set(\"token\", token)",
+							"   }",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test@mail.com\",\n    \"password\": \"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/v1/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "v1/login",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@mail.com\",\n    \"password\": \"1223\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"login"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 15 Sep 2022 12:42:39 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "38"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"wrong email or password\"\n}"
+				}
+			]
 		}
 	],
 	"event": [
@@ -757,6 +1012,11 @@
 		{
 			"key": "base_url",
 			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
 			"type": "string"
 		}
 	]
