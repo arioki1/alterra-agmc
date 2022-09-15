@@ -3,6 +3,7 @@ package database
 import (
 	"fmt"
 	"github.com/arioki1/alterra-agmc/day3/config"
+	"github.com/arioki1/alterra-agmc/day3/middlewares"
 	"github.com/arioki1/alterra-agmc/day3/models"
 )
 
@@ -62,4 +63,21 @@ func DeleteUser(id *int) error {
 	}
 
 	return nil
+}
+
+func LoginUsers(user *models.Users) (interface{}, error) {
+	var err error
+	if err = config.DB.Where("email = ? AND password = ? ", user.Email, user.Password).First(user).Error; err != nil {
+		return nil, err
+	}
+
+	user.Token, err = middlewares.CreateToken(int(user.ID))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := config.DB.Save(user).Error; err != nil {
+		return nil, err
+	}
+	return user, nil
 }

@@ -130,3 +130,23 @@ func DeleteUserByIdControllers(c echo.Context) error {
 		"user":   nil,
 	})
 }
+
+func LoginUsersControllers(c echo.Context) error {
+	user := models.Users{}
+	c.Bind(&user)
+	users, e := database.LoginUsers(&user)
+
+	if e != nil {
+		if e.Error() == "record not found" {
+			return echo.NewHTTPError(http.StatusBadRequest, "wrong email or password")
+		} else {
+			return echo.NewHTTPError(http.StatusInternalServerError, e.Error())
+		}
+	}
+	user.Password = ""
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"status": "success login",
+		"users":  users,
+	},
+	)
+}
