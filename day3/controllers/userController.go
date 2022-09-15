@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/arioki1/alterra-agmc/day3/lib/database"
 	"github.com/arioki1/alterra-agmc/day3/models"
 	"net/http"
@@ -81,6 +82,13 @@ func UpdateUserByIdControllers(c echo.Context) error {
 		})
 	}
 
+	if id != getUserId(c) {
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"status": "you can edit your own data only",
+			"user":   nil,
+		})
+	}
+
 	var user models.Users
 	if err := c.Bind(&user); err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -118,6 +126,13 @@ func DeleteUserByIdControllers(c echo.Context) error {
 		})
 	}
 
+	if id != getUserId(c) {
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"status": "you can delete your own data only",
+			"user":   nil,
+		})
+	}
+
 	if e := database.DeleteUser(&id); e != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
 			"status": e.Error(),
@@ -147,6 +162,18 @@ func LoginUsersControllers(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"status": "success login",
 		"users":  users,
-	},
-	)
+	})
+
+}
+
+func getUserId(c echo.Context) int {
+	var id int
+	userId := c.Get("userId")
+	if userId != nil {
+		i, err := strconv.Atoi(fmt.Sprintf("%v", userId))
+		if err == nil {
+			id = i
+		}
+	}
+	return id
 }
