@@ -1,28 +1,14 @@
- # 3. Middleware
-**Objective** :
+ # 4. Unit & Integration Testing
+ **Objective** :
 
-- Log Implementation
-- Implementing JWT Auth for Protecting API
+- Implement Integration Testing
 
-**Tasks** :
+**Task** :
 
-- Implement **log middleware** to Day 2 task
-- Implement **JWT Auth middleware** based on requirements below
+- Using your project from previous day, implement integration testing on controller
+- Minimum test case per function is 2
 
-| **Method** | **Endpoint** | **JWT** |
-| --- | --- | --- |
-| GET | /books | Not Authenticated |
-| GET | /books/:id | Not Authenticated |
-| POST | /books | Authenticated |
-| PUT | /books/:id | Authenticated |
-| DELETE | /books/:id | Authenticated |
+- Valid test case, e.g. http response 200, 201
+- Invalid test case, e.g. http response 400, 401, 500
 
-| **Method** | **Endpoint** | **JWT** |
-| --- | --- | --- |
-| GET | /users | Authenticated |
-| GET | /users/:id | Authenticated |
-| POST | /users | Not Authenticated |
-| PUT | /users/:id | Authenticated |
-| DELETE | /users/:id | Authenticated |
-
-It is also a good thing if you can implement **Validator middleware** , and plus point if you can make a user only able to do PUT and DELETE on himself.
+- No minimum coverage percentage, but higher is better
