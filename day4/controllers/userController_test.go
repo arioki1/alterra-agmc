@@ -189,3 +189,39 @@ func TestUpdateUserByIdControllersSuccess(t *testing.T) {
 	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
 	assert.Equal(t, "success", result["status"])
 }
+
+func TestUpdateUserByIdControllersNotOwnedID(t *testing.T) {
+	setupTest(t)
+
+	//setup echo context
+	e := echo.New()
+
+	//create json body
+	body := models.Users{
+		Name:     "yoga",
+		Email:    "yoga@mail.com",
+		Password: "pwd",
+	}
+
+	//setup request
+	b, _ := json.Marshal(body)
+	req := httptest.NewRequest(http.MethodPut, "/users", strings.NewReader(string(b)))
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+
+	//set params
+	c.SetParamNames("id")
+	c.SetParamValues("1")
+
+	//set user id
+	c.Set("userId", 2)
+
+	//test
+	assert.NoError(t, UpdateUserByIdControllers(c))
+	assert.Equal(t, http.StatusBadRequest, rec.Code)
+	result := map[string]interface{}{}
+	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
+	assert.Equal(t, "you can edit your own data only", result["status"])
+}
