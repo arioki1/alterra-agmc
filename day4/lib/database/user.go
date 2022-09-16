@@ -18,6 +18,7 @@ func GetUsers() (*[]models.Users, error) {
 }
 
 func CreateUsers(user *models.Users) (*models.Users, error) {
+	println(config.DB)
 	if e := config.DB.
 		Create(&user).
 		Error; e != nil {

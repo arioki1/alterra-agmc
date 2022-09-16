@@ -19,11 +19,17 @@ func NewUserSeeder() *seed {
 func (s *seed) Seed() {
 	users := []models.Users{
 		{
+			Model: gorm.Model{
+				ID: 1,
+			},
 			Name:     "test1",
 			Email:    "test1@mail.com",
 			Password: "test1",
 		},
 		{
+			Model: gorm.Model{
+				ID: 2,
+			},
 			Name:     "test2",
 			Email:    "test2@mail.com",
 			Password: "test2",

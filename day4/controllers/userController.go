@@ -61,9 +61,15 @@ func GetUserByIdControllers(c echo.Context) error {
 	users, e := database.GetUserById(&id)
 	if e != nil {
 		if e.Error() == "record not found" {
-			return echo.NewHTTPError(http.StatusBadRequest, "user not found")
+			return c.JSON(http.StatusBadRequest, map[string]interface{}{
+				"status": "user not found",
+				"user":   nil,
+			})
 		} else {
-			return echo.NewHTTPError(http.StatusInternalServerError, e.Error())
+			return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+				"status": e.Error(),
+				"user":   nil,
+			})
 		}
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
