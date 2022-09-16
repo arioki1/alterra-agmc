@@ -16,7 +16,7 @@ import (
 )
 
 // init function testing
-func initTest(t *testing.T) {
+func setupTest(t *testing.T) {
 	//load env
 	if err := godotenv.Load("../.env"); err != nil {
 		t.Error("Error3 loading .env file")
@@ -33,7 +33,7 @@ func initTest(t *testing.T) {
 }
 
 func TestGetUserControllers(t *testing.T) {
-	initTest(t)
+	setupTest(t)
 	//setup echo context
 	e := echo.New()
 
@@ -51,7 +51,7 @@ func TestGetUserControllers(t *testing.T) {
 }
 
 func TestCreateUserControllersSuccess(t *testing.T) {
-	initTest(t)
+	setupTest(t)
 
 	//setup echo context
 	e := echo.New()
@@ -79,7 +79,7 @@ func TestCreateUserControllersSuccess(t *testing.T) {
 }
 
 func TestCreateUserControllersFailedWhenUserNotInputEmail(t *testing.T) {
-	initTest(t)
+	setupTest(t)
 
 	//setup echo context
 	e := echo.New()
@@ -96,6 +96,7 @@ func TestCreateUserControllersFailedWhenUserNotInputEmail(t *testing.T) {
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
+	//test
 	assert.NoError(t, CreateUserControllers(c))
 	assert.Equal(t, http.StatusBadRequest, rec.Code)
 	result := map[string]interface{}{}
@@ -105,7 +106,7 @@ func TestCreateUserControllersFailedWhenUserNotInputEmail(t *testing.T) {
 }
 
 func TestGetUserByIdControllersSuccess(t *testing.T) {
-	initTest(t)
+	setupTest(t)
 
 	//setup echo context
 	e := echo.New()
@@ -115,6 +116,8 @@ func TestGetUserByIdControllersSuccess(t *testing.T) {
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
+
+	//set params
 	c.SetParamNames("id")
 	c.SetParamValues("1")
 
@@ -127,7 +130,7 @@ func TestGetUserByIdControllersSuccess(t *testing.T) {
 }
 
 func TestGetUserByIdControllersNotFound(t *testing.T) {
-	initTest(t)
+	setupTest(t)
 
 	//setup echo context
 	e := echo.New()
@@ -137,6 +140,8 @@ func TestGetUserByIdControllersNotFound(t *testing.T) {
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
+
+	//set params
 	c.SetParamNames("id")
 	c.SetParamValues("10")
 
@@ -147,4 +152,40 @@ func TestGetUserByIdControllersNotFound(t *testing.T) {
 	result := map[string]interface{}{}
 	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
 	assert.Equal(t, "user not found", result["status"])
+}
+
+func TestUpdateUserByIdControllersSuccess(t *testing.T) {
+	setupTest(t)
+
+	//setup echo context
+	e := echo.New()
+
+	//create json body
+	body := models.Users{
+		Name:     "yoga",
+		Email:    "yoga@mail.com",
+		Password: "pwd",
+	}
+
+	//setup request
+	b, _ := json.Marshal(body)
+	req := httptest.NewRequest(http.MethodPut, "/users", strings.NewReader(string(b)))
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+
+	//set params
+	c.SetParamNames("id")
+	c.SetParamValues("1")
+
+	//set user id
+	c.Set("userId", 1)
+
+	//test
+	assert.NoError(t, UpdateUserByIdControllers(c))
+	assert.Equal(t, http.StatusOK, rec.Code)
+	result := map[string]interface{}{}
+	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
+	assert.Equal(t, "success", result["status"])
 }
