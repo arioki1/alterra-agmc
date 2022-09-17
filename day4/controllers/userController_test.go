@@ -261,3 +261,30 @@ func TestUpdateUserByIdControllersNotFound(t *testing.T) {
 	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
 	assert.Equal(t, fmt.Sprintf("row with id=%v  cannot be update because it doesn't exist", 10), result["status"])
 }
+
+func TestDeleteUserByIdControllersSuccess(t *testing.T) {
+	setupTest(t)
+
+	//setup echo context
+	e := echo.New()
+
+	//setup request
+	req := httptest.NewRequest(http.MethodDelete, "/users", nil)
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+
+	//set params
+	c.SetParamNames("id")
+	c.SetParamValues("1")
+
+	//set user id
+	c.Set("userId", 1)
+
+	//test
+	assert.NoError(t, DeleteUserByIdControllers(c))
+	assert.Equal(t, http.StatusOK, rec.Code)
+	result := map[string]interface{}{}
+	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
+	assert.Equal(t, "deleted", result["status"])
+}
