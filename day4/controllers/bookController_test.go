@@ -297,29 +297,6 @@ func TestDeleteBookByIdControllersInvalidParams(t *testing.T) {
 	assert.Equal(t, "Invalid params", result["status"])
 }
 
-func TestDeleteBookByIdControllersInvalidJson(t *testing.T) {
-	//setup echo context
-	e := echo.New()
-
-	//create json body
-	body := `{"title":1","isbn":"test","writer":"test"}`
-
-	//setup request
-	req := httptest.NewRequest(http.MethodDelete, "/books", strings.NewReader(body))
-	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
-	rec := httptest.NewRecorder()
-	c := e.NewContext(req, rec)
-	c.SetParamNames("id")
-	c.SetParamValues("1")
-
-	//test
-	assert.NoError(t, DeleteBookByIdControllers(c))
-	assert.Equal(t, http.StatusBadRequest, rec.Code)
-	result := map[string]interface{}{}
-	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
-	assert.Equal(t, "Invalid JSON body", result["status"])
-}
-
 func TestDeleteBookByIdControllersSuccess(t *testing.T) {
 	//setup echo context
 	e := echo.New()
@@ -334,8 +311,7 @@ func TestDeleteBookByIdControllersSuccess(t *testing.T) {
 	books = append(books, body)
 
 	//setup request
-	b, _ := json.Marshal(body)
-	req := httptest.NewRequest(http.MethodDelete, "/books", strings.NewReader(string(b)))
+	req := httptest.NewRequest(http.MethodDelete, "/books", nil)
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
@@ -348,7 +324,7 @@ func TestDeleteBookByIdControllersSuccess(t *testing.T) {
 	assert.Equal(t, http.StatusOK, rec.Code)
 	result := map[string]interface{}{}
 	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
-	assert.Equal(t, "updated", result["status"])
+	assert.Equal(t, "deleted", result["status"])
 }
 
 func TestDeleteBookByIdControllersNotFound(t *testing.T) {
@@ -365,8 +341,7 @@ func TestDeleteBookByIdControllersNotFound(t *testing.T) {
 	books = append(books, body)
 
 	//setup request
-	b, _ := json.Marshal(body)
-	req := httptest.NewRequest(http.MethodDelete, "/books", strings.NewReader(string(b)))
+	req := httptest.NewRequest(http.MethodDelete, "/books", nil)
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
