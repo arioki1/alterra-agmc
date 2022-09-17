@@ -288,3 +288,30 @@ func TestDeleteUserByIdControllersSuccess(t *testing.T) {
 	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
 	assert.Equal(t, "deleted", result["status"])
 }
+
+func TestDeleteUserByIdControllersNotOwnedID(t *testing.T) {
+	setupTest(t)
+
+	//setup echo context
+	e := echo.New()
+
+	//setup request
+	req := httptest.NewRequest(http.MethodDelete, "/users", nil)
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+
+	//set params
+	c.SetParamNames("id")
+	c.SetParamValues("1")
+
+	//set user id
+	c.Set("userId", 2)
+
+	//test
+	assert.NoError(t, DeleteUserByIdControllers(c))
+	assert.Equal(t, http.StatusBadRequest, rec.Code)
+	result := map[string]interface{}{}
+	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
+	assert.Equal(t, "you can delete your own data only", result["status"])
+}
