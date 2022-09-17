@@ -55,7 +55,7 @@
 			<div id="nav">
 				<select id="files">
 				
-				<option value="file0">github.com/arioki1/alterra-agmc/day4/controllers/bookController.go (57.4%)</option>
+				<option value="file0">github.com/arioki1/alterra-agmc/day4/controllers/bookController.go (78.7%)</option>
 				
 				<option value="file1">github.com/arioki1/alterra-agmc/day4/controllers/userController.go (87.9%)</option>
 				
@@ -163,19 +163,19 @@ func UpdateBookByIdControllers(c echo.Context) error <span class="cov8" title="1
                 })
         }</span>
 
-        <span class="cov0" title="0">for i, b := range books </span><span class="cov0" title="0">{
-                if b.Id == id </span><span class="cov0" title="0">{
-                        if book.Title != "" </span><span class="cov0" title="0">{
+        <span class="cov8" title="1">for i, b := range books </span><span class="cov8" title="1">{
+                if b.Id == id </span><span class="cov8" title="1">{
+                        if book.Title != "" </span><span class="cov8" title="1">{
                                 books[i].Title = book.Title
                         }</span>
-                        <span class="cov0" title="0">if book.Isbn != "" </span><span class="cov0" title="0">{
+                        <span class="cov8" title="1">if book.Isbn != "" </span><span class="cov8" title="1">{
                                 books[i].Isbn = book.Isbn
                         }</span>
-                        <span class="cov0" title="0">if book.Writer != "" </span><span class="cov0" title="0">{
+                        <span class="cov8" title="1">if book.Writer != "" </span><span class="cov8" title="1">{
                                 books[i].Writer = book.Writer
                         }</span>
 
-                        <span class="cov0" title="0">books[i].UpdatedAt = time.Now()
+                        <span class="cov8" title="1">books[i].UpdatedAt = time.Now()
 
                         return c.JSON(http.StatusOK, map[string]interface{}{
                                 "status": "updated",

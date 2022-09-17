@@ -16,7 +16,7 @@ func TestGetBooksControllers(t *testing.T) {
 	e := echo.New()
 
 	//setup request
-	req := httptest.NewRequest(http.MethodGet, "/users", nil)
+	req := httptest.NewRequest(http.MethodGet, "/books", nil)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
@@ -215,4 +215,35 @@ func TestUpdateBookByIdControllersInvalidJson(t *testing.T) {
 	result := map[string]interface{}{}
 	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
 	assert.Equal(t, "Invalid JSON body", result["status"])
+}
+
+func TestUpdateBookByIdControllersSuccess(t *testing.T) {
+	//setup echo context
+	e := echo.New()
+
+	body := models.Book{
+		Id:     1,
+		Title:  "test",
+		Isbn:   "1234567890",
+		Writer: "test",
+	}
+	//add book
+	books = append(books, body)
+
+	//setup request
+	b, _ := json.Marshal(body)
+	req := httptest.NewRequest(http.MethodPost, "/books", strings.NewReader(string(b)))
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+
+	c.SetParamNames("id")
+	c.SetParamValues("1")
+
+	//test
+	assert.NoError(t, UpdateBookByIdControllers(c))
+	assert.Equal(t, http.StatusOK, rec.Code)
+	result := map[string]interface{}{}
+	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
+	assert.Equal(t, "updated", result["status"])
 }
