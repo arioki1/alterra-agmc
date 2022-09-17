@@ -315,3 +315,30 @@ func TestDeleteUserByIdControllersNotOwnedID(t *testing.T) {
 	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
 	assert.Equal(t, "you can delete your own data only", result["status"])
 }
+
+func TestDeleteUserByIdControllersNotFound(t *testing.T) {
+	setupTest(t)
+
+	//setup echo context
+	e := echo.New()
+
+	//setup request
+	req := httptest.NewRequest(http.MethodDelete, "/users", nil)
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+
+	//set params
+	c.SetParamNames("id")
+	c.SetParamValues("10")
+
+	//set user id
+	c.Set("userId", 10)
+
+	//test
+	assert.NoError(t, DeleteUserByIdControllers(c))
+	assert.Equal(t, http.StatusBadRequest, rec.Code)
+	result := map[string]interface{}{}
+	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
+	assert.Equal(t, fmt.Sprintf("row with id=%v  cannot be delete because it doesn't exist", 10), result["status"])
+}
