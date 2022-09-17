@@ -175,3 +175,21 @@ func TestGetBookByIdControllersNotFound(t *testing.T) {
 	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
 	assert.Equal(t, "book not found", result["status"])
 }
+
+func TestUpdateBookByIdControllersInvalidParams(t *testing.T) {
+	//setup echo context
+	e := echo.New()
+
+	//setup request
+	req := httptest.NewRequest(http.MethodPut, "/books", nil)
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+
+	//test
+	assert.NoError(t, UpdateBookByIdControllers(c))
+	assert.Equal(t, http.StatusBadRequest, rec.Code)
+	result := map[string]interface{}{}
+	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
+	assert.Equal(t, "Invalid params", result["status"])
+}
