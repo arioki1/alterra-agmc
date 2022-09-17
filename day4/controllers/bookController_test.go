@@ -166,7 +166,7 @@ func TestGetBookByIdControllersNotFound(t *testing.T) {
 	c := e.NewContext(req, rec)
 
 	c.SetParamNames("id")
-	c.SetParamValues("2")
+	c.SetParamValues("20")
 
 	//test
 	assert.NoError(t, GetBookByIdControllers(c))
