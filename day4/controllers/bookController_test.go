@@ -247,3 +247,34 @@ func TestUpdateBookByIdControllersSuccess(t *testing.T) {
 	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
 	assert.Equal(t, "updated", result["status"])
 }
+
+func TestUpdateBookByIdControllersNotFound(t *testing.T) {
+	//setup echo context
+	e := echo.New()
+
+	body := models.Book{
+		Id:     1,
+		Title:  "test",
+		Isbn:   "1234567890",
+		Writer: "test",
+	}
+	//add book
+	books = append(books, body)
+
+	//setup request
+	b, _ := json.Marshal(body)
+	req := httptest.NewRequest(http.MethodPost, "/books", strings.NewReader(string(b)))
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+
+	c.SetParamNames("id")
+	c.SetParamValues("2")
+
+	//test
+	assert.NoError(t, UpdateBookByIdControllers(c))
+	assert.Equal(t, http.StatusBadRequest, rec.Code)
+	result := map[string]interface{}{}
+	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
+	assert.Equal(t, "book not found", result["status"])
+}
