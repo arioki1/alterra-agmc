@@ -342,3 +342,37 @@ func TestDeleteUserByIdControllersNotFound(t *testing.T) {
 	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
 	assert.Equal(t, fmt.Sprintf("row with id=%v  cannot be delete because it doesn't exist", 10), result["status"])
 }
+
+func TestLoginUsersControllersSuccess(t *testing.T) {
+	setupTest(t)
+
+	//setup echo context
+	e := echo.New()
+
+	//create json body
+	body := models.Users{
+		Email:    "test1@mail.com",
+		Password: "test1",
+	}
+
+	//setup request
+	b, _ := json.Marshal(body)
+	req := httptest.NewRequest(http.MethodPost, "/login", strings.NewReader(string(b)))
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+
+	//test
+	assert.NoError(t, LoginUsersControllers(c))
+	assert.Equal(t, http.StatusOK, rec.Code)
+	result := map[string]interface{}{}
+	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
+	dataUsers := result["users"].(map[string]interface{})
+	assert.Equal(t, "success login", result["status"])
+	assert.NotNil(t, dataUsers["name"])
+	assert.NotEmpty(t, dataUsers["name"])
+	assert.Equal(t, body.Email, dataUsers["email"])
+	assert.Nil(t, dataUsers["password"])
+	assert.NotNil(t, dataUsers["token"])
+	assert.NotEmpty(t, dataUsers["token"])
+}
