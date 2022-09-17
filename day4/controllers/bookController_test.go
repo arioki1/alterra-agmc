@@ -232,7 +232,7 @@ func TestUpdateBookByIdControllersSuccess(t *testing.T) {
 
 	//setup request
 	b, _ := json.Marshal(body)
-	req := httptest.NewRequest(http.MethodPost, "/books", strings.NewReader(string(b)))
+	req := httptest.NewRequest(http.MethodPut, "/books", strings.NewReader(string(b)))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
@@ -263,13 +263,13 @@ func TestUpdateBookByIdControllersNotFound(t *testing.T) {
 
 	//setup request
 	b, _ := json.Marshal(body)
-	req := httptest.NewRequest(http.MethodPost, "/books", strings.NewReader(string(b)))
+	req := httptest.NewRequest(http.MethodPut, "/books", strings.NewReader(string(b)))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
 	c.SetParamNames("id")
-	c.SetParamValues("2")
+	c.SetParamValues("20")
 
 	//test
 	assert.NoError(t, UpdateBookByIdControllers(c))
