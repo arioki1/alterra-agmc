@@ -376,3 +376,30 @@ func TestLoginUsersControllersSuccess(t *testing.T) {
 	assert.NotNil(t, dataUsers["token"])
 	assert.NotEmpty(t, dataUsers["token"])
 }
+
+func TestLoginUsersControllersWrongEmailOrPassword(t *testing.T) {
+	setupTest(t)
+
+	//setup echo context
+	e := echo.New()
+
+	//create json body
+	body := models.Users{
+		Email:    "test1@mail.com",
+		Password: "test2",
+	}
+
+	//setup request
+	b, _ := json.Marshal(body)
+	req := httptest.NewRequest(http.MethodPost, "/login", strings.NewReader(string(b)))
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+
+	//test
+	err := LoginUsersControllers(c)
+	he, ok := err.(*echo.HTTPError)
+	assert.True(t, ok)
+	assert.Equal(t, http.StatusBadRequest, he.Code)
+	assert.Equal(t, "wrong email or password", he.Message)
+}
