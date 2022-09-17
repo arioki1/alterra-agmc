@@ -115,3 +115,33 @@ func TestGetBookByIdControllersInvalidParams(t *testing.T) {
 	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
 	assert.Equal(t, "Invalid params", result["status"])
 }
+
+func TestGetBookByIdControllersSuccess(t *testing.T) {
+	// add books
+	book := models.Book{
+		Id:     1,
+		Title:  "test",
+		Isbn:   "1234567890",
+		Writer: "test",
+	}
+
+	books = append(books, book)
+	//setup echo context
+	e := echo.New()
+
+	//setup request
+	req := httptest.NewRequest(http.MethodGet, "/books", nil)
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+
+	c.SetParamNames("id")
+	c.SetParamValues("1")
+
+	//test
+	assert.NoError(t, GetBookByIdControllers(c))
+	assert.Equal(t, http.StatusOK, rec.Code)
+	result := map[string]interface{}{}
+	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
+	assert.Equal(t, "success", result["status"])
+}
