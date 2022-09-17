@@ -1,10 +1,10 @@
 mode: set
 github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:15.48,20.2 1 1
-github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:22.50,24.38 2 0
-github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:30.2,35.42 5 0
-github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:42.2,47.4 2 0
-github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:24.38,29.3 1 0
-github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:35.42,40.3 1 0
+github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:22.50,24.38 2 1
+github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:30.2,35.42 5 1
+github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:42.2,47.4 2 1
+github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:24.38,29.3 1 1
+github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:35.42,40.3 1 1
 github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:50.51,53.16 3 0
 github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:60.2,60.29 1 0
 github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:69.2,72.4 1 0
@@ -44,7 +44,7 @@ github.com/arioki1/alterra-agmc/day4/controllers/userController.go:42.14,44.3 1 
 github.com/arioki1/alterra-agmc/day4/controllers/userController.go:51.51,54.16 3 1
 github.com/arioki1/alterra-agmc/day4/controllers/userController.go:61.2,62.14 2 1
 github.com/arioki1/alterra-agmc/day4/controllers/userController.go:75.2,78.4 1 1
-github.com/arioki1/alterra-agmc/day4/controllers/userController.go:54.16,59.3 1 0
+github.com/arioki1/alterra-agmc/day4/controllers/userController.go:54.16,59.3 1 1
 github.com/arioki1/alterra-agmc/day4/controllers/userController.go:62.14,63.38 1 1
 github.com/arioki1/alterra-agmc/day4/controllers/userController.go:63.38,68.4 1 1
 github.com/arioki1/alterra-agmc/day4/controllers/userController.go:68.9,73.4 1 0
