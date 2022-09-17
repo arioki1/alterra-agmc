@@ -32,6 +32,67 @@ func setupTest(t *testing.T) {
 	s.Seed()
 }
 
+func TestLoginUsersControllersSuccess(t *testing.T) {
+	setupTest(t)
+
+	//setup echo context
+	e := echo.New()
+
+	//create json body
+	body := models.Users{
+		Email:    "test1@mail.com",
+		Password: "test1",
+	}
+
+	//setup request
+	b, _ := json.Marshal(body)
+	req := httptest.NewRequest(http.MethodPost, "/login", strings.NewReader(string(b)))
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+
+	//test
+	assert.NoError(t, LoginUsersControllers(c))
+	assert.Equal(t, http.StatusOK, rec.Code)
+	result := map[string]interface{}{}
+	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
+	dataUsers := result["users"].(map[string]interface{})
+	assert.Equal(t, "success login", result["status"])
+	assert.NotNil(t, dataUsers["name"])
+	assert.NotEmpty(t, dataUsers["name"])
+	assert.Equal(t, body.Email, dataUsers["email"])
+	assert.Nil(t, dataUsers["password"])
+	assert.NotNil(t, dataUsers["token"])
+	assert.NotEmpty(t, dataUsers["token"])
+}
+
+func TestLoginUsersControllersWrongEmailOrPassword(t *testing.T) {
+	setupTest(t)
+
+	//setup echo context
+	e := echo.New()
+
+	//create json body
+	body := models.Users{
+		Email:    "test1@mail.com",
+		Password: "test2",
+	}
+
+	//setup request
+	b, _ := json.Marshal(body)
+	req := httptest.NewRequest(http.MethodPost, "/login", strings.NewReader(string(b)))
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+
+	//test
+	err := LoginUsersControllers(c)
+	he, ok := err.(*echo.HTTPError)
+	assert.True(t, ok)
+	assert.Equal(t, http.StatusBadRequest, he.Code)
+	assert.Equal(t, "wrong email or password", he.Message)
+}
+
 func TestGetUserControllers(t *testing.T) {
 	setupTest(t)
 	//setup echo context
@@ -48,6 +109,27 @@ func TestGetUserControllers(t *testing.T) {
 	result := map[string]interface{}{}
 	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
 	assert.Equal(t, "success", result["status"])
+}
+
+func TestGetUserControllersFailedDBNotConnect(t *testing.T) {
+	setupTest(t)
+	db, err := config.DB.DB()
+	assert.NoError(t, err)
+	assert.NoError(t, db.Close())
+	//setup echo context
+	e := echo.New()
+
+	//setup request
+	req := httptest.NewRequest(http.MethodGet, "/users", nil)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+
+	//test
+	err = GetUserControllers(c)
+	assert.Error(t, err)
+	he, ok := err.(*echo.HTTPError)
+	assert.True(t, ok)
+	assert.Equal(t, http.StatusInternalServerError, he.Code)
 }
 
 func TestCreateUserControllersSuccess(t *testing.T) {
@@ -343,63 +425,20 @@ func TestDeleteUserByIdControllersNotFound(t *testing.T) {
 	assert.Equal(t, fmt.Sprintf("row with id=%v  cannot be delete because it doesn't exist", 10), result["status"])
 }
 
-func TestLoginUsersControllersSuccess(t *testing.T) {
-	setupTest(t)
+func TestGetUserId(t *testing.T) {
 
 	//setup echo context
 	e := echo.New()
 
-	//create json body
-	body := models.Users{
-		Email:    "test1@mail.com",
-		Password: "test1",
-	}
-
 	//setup request
-	b, _ := json.Marshal(body)
-	req := httptest.NewRequest(http.MethodPost, "/login", strings.NewReader(string(b)))
+	req := httptest.NewRequest(http.MethodGet, "/users", nil)
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
-	//test
-	assert.NoError(t, LoginUsersControllers(c))
-	assert.Equal(t, http.StatusOK, rec.Code)
-	result := map[string]interface{}{}
-	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
-	dataUsers := result["users"].(map[string]interface{})
-	assert.Equal(t, "success login", result["status"])
-	assert.NotNil(t, dataUsers["name"])
-	assert.NotEmpty(t, dataUsers["name"])
-	assert.Equal(t, body.Email, dataUsers["email"])
-	assert.Nil(t, dataUsers["password"])
-	assert.NotNil(t, dataUsers["token"])
-	assert.NotEmpty(t, dataUsers["token"])
-}
-
-func TestLoginUsersControllersWrongEmailOrPassword(t *testing.T) {
-	setupTest(t)
-
-	//setup echo context
-	e := echo.New()
-
-	//create json body
-	body := models.Users{
-		Email:    "test1@mail.com",
-		Password: "test2",
-	}
-
-	//setup request
-	b, _ := json.Marshal(body)
-	req := httptest.NewRequest(http.MethodPost, "/login", strings.NewReader(string(b)))
-	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
-	rec := httptest.NewRecorder()
-	c := e.NewContext(req, rec)
+	//set user id
+	c.Set("userId", 1)
 
 	//test
-	err := LoginUsersControllers(c)
-	he, ok := err.(*echo.HTTPError)
-	assert.True(t, ok)
-	assert.Equal(t, http.StatusBadRequest, he.Code)
-	assert.Equal(t, "wrong email or password", he.Message)
+	assert.Equal(t, 1, getUserId(c))
 }
