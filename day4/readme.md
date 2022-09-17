@@ -55,3 +55,15 @@ github.com/arioki1/alterra-agmc/day4/controllers/userController.go:175: getUserI
 total:                                                                  (statements)                    92.9%
 
 ```
+
+## gocoverage
+```bash
+function gocoverage(){
+  go test ./...
+  go test -cover ./...
+  go test -coverprofile=coverage.out ./...
+  go tool cover -func=coverage.out
+  go tool cover -html=coverage.out -o coverage.html
+  open coverage.html
+}
+```
