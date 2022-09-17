@@ -193,3 +193,26 @@ func TestUpdateBookByIdControllersInvalidParams(t *testing.T) {
 	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
 	assert.Equal(t, "Invalid params", result["status"])
 }
+
+func TestUpdateBookByIdControllersInvalidJson(t *testing.T) {
+	//setup echo context
+	e := echo.New()
+
+	//create json body
+	body := `{"title":1","isbn":"test","writer":"test"}`
+
+	//setup request
+	req := httptest.NewRequest(http.MethodPut, "/books", strings.NewReader(body))
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+	c.SetParamNames("id")
+	c.SetParamValues("1")
+
+	//test
+	assert.NoError(t, UpdateBookByIdControllers(c))
+	assert.Equal(t, http.StatusBadRequest, rec.Code)
+	result := map[string]interface{}{}
+	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
+	assert.Equal(t, "Invalid JSON body", result["status"])
+}

@@ -12,11 +12,11 @@ github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:53.16,58.3 1 
 github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:60.29,61.20 1 1
 github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:61.20,66.4 1 1
 github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:75.54,78.16 3 1
-github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:85.2,86.38 2 0
+github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:85.2,86.38 2 1
 github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:93.2,93.26 1 0
 github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:114.2,117.4 1 0
 github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:78.16,83.3 1 1
-github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:86.38,91.3 1 0
+github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:86.38,91.3 1 1
 github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:93.26,94.17 1 0
 github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:94.17,95.24 1 0
 github.com/arioki1/alterra-agmc/day4/controllers/bookController.go:98.4,98.23 1 0

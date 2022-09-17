@@ -55,7 +55,7 @@
 			<div id="nav">
 				<select id="files">
 				
-				<option value="file0">github.com/arioki1/alterra-agmc/day4/controllers/bookController.go (51.1%)</option>
+				<option value="file0">github.com/arioki1/alterra-agmc/day4/controllers/bookController.go (57.4%)</option>
 				
 				<option value="file1">github.com/arioki1/alterra-agmc/day4/controllers/userController.go (87.9%)</option>
 				
@@ -155,8 +155,8 @@ func UpdateBookByIdControllers(c echo.Context) error <span class="cov8" title="1
                 })
         }</span>
 
-        <span class="cov0" title="0">var book models.Book
-        if err := c.Bind(&amp;book); err != nil </span><span class="cov0" title="0">{
+        <span class="cov8" title="1">var book models.Book
+        if err := c.Bind(&amp;book); err != nil </span><span class="cov8" title="1">{
                 return c.JSON(http.StatusBadRequest, map[string]interface{}{
                         "status": "Invalid JSON body",
                         "users":  nil,
