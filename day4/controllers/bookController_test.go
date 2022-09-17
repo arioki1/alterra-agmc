@@ -108,11 +108,8 @@ func TestGetBookByIdControllersInvalidParams(t *testing.T) {
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
-	c.SetParamNames("id")
-	c.SetParamValues("a")
-
 	//test
-	assert.NoError(t, GetUserByIdControllers(c))
+	assert.NoError(t, GetBookByIdControllers(c))
 	assert.Equal(t, http.StatusBadRequest, rec.Code)
 	result := map[string]interface{}{}
 	assert.NoError(t, json.NewDecoder(rec.Body).Decode(&result))
