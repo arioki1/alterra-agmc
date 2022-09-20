@@ -1,0 +1,436 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>controllers: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">github.com/arioki1/alterra-agmc/day7/controllers/bookController.go (100.0%)</option>
+				
+				<option value="file1">github.com/arioki1/alterra-agmc/day7/controllers/userController.go (87.9%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package controllers
+
+import (
+        "github.com/arioki1/alterra-agmc/day7/models"
+        "net/http"
+        "strconv"
+        "time"
+
+        "github.com/labstack/echo"
+)
+
+var lastBookId int
+var books []models.Book
+
+func GetBooksControllers(c echo.Context) error <span class="cov8" title="1">{
+        return c.JSON(http.StatusOK, map[string]interface{}{
+                "status": "success",
+                "books":  books,
+        })
+}</span>
+
+func CreateBookControllers(c echo.Context) error <span class="cov8" title="1">{
+        var book models.Book
+        if err := c.Bind(&amp;book); err != nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, map[string]interface{}{
+                        "status": "Invalid JSON body",
+                        "book":   nil,
+                })
+        }</span>
+        <span class="cov8" title="1">lastBookId++
+        book.Id = lastBookId
+        book.CreatedAt = time.Now()
+        book.UpdatedAt = time.Now()
+
+        if err := book.Validation(); err != nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, map[string]interface{}{
+                        "status": err.Error(),
+                        "book":   nil,
+                })
+        }</span>
+
+        <span class="cov8" title="1">books = append(books, book)
+
+        return c.JSON(http.StatusOK, map[string]interface{}{
+                "status": "created",
+                "books":  book,
+        })</span>
+}
+
+func GetBookByIdControllers(c echo.Context) error <span class="cov8" title="1">{
+        idParams := c.Param("id")
+        id, err := strconv.Atoi(idParams)
+        if err != nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, map[string]interface{}{
+                        "status": "Invalid params",
+                        "user":   nil,
+                })
+        }</span>
+
+        <span class="cov8" title="1">for _, book := range books </span><span class="cov8" title="1">{
+                if book.Id == id </span><span class="cov8" title="1">{
+                        return c.JSON(http.StatusOK, map[string]interface{}{
+                                "status": "success",
+                                "book":   book,
+                        })
+                }</span>
+        }
+
+        <span class="cov8" title="1">return c.JSON(http.StatusBadRequest, map[string]interface{}{
+                "status": "book not found",
+                "book":   nil,
+        })</span>
+}
+
+func UpdateBookByIdControllers(c echo.Context) error <span class="cov8" title="1">{
+        idParams := c.Param("id")
+        id, err := strconv.Atoi(idParams)
+        if err != nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, map[string]interface{}{
+                        "status": "Invalid params",
+                        "book":   nil,
+                })
+        }</span>
+
+        <span class="cov8" title="1">var book models.Book
+        if err := c.Bind(&amp;book); err != nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, map[string]interface{}{
+                        "status": "Invalid JSON body",
+                        "users":  nil,
+                })
+        }</span>
+
+        <span class="cov8" title="1">for i, b := range books </span><span class="cov8" title="1">{
+                if b.Id == id </span><span class="cov8" title="1">{
+                        if book.Title != "" </span><span class="cov8" title="1">{
+                                books[i].Title = book.Title
+                        }</span>
+                        <span class="cov8" title="1">if book.Isbn != "" </span><span class="cov8" title="1">{
+                                books[i].Isbn = book.Isbn
+                        }</span>
+                        <span class="cov8" title="1">if book.Writer != "" </span><span class="cov8" title="1">{
+                                books[i].Writer = book.Writer
+                        }</span>
+
+                        <span class="cov8" title="1">books[i].UpdatedAt = time.Now()
+
+                        return c.JSON(http.StatusOK, map[string]interface{}{
+                                "status": "updated",
+                                "book":   books[i],
+                        })</span>
+                }
+        }
+
+        <span class="cov8" title="1">return c.JSON(http.StatusBadRequest, map[string]interface{}{
+                "status": "book not found",
+                "book":   nil,
+        })</span>
+}
+
+func DeleteBookByIdControllers(c echo.Context) error <span class="cov8" title="1">{
+        idParams := c.Param("id")
+        id, err := strconv.Atoi(idParams)
+        if err != nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, map[string]interface{}{
+                        "status": "Invalid params",
+                        "user":   nil,
+                })
+        }</span>
+
+        <span class="cov8" title="1">for i, book := range books </span><span class="cov8" title="1">{
+                if book.Id == id </span><span class="cov8" title="1">{
+                        books = append(books[:i], books[i+1:]...)
+                        return c.JSON(http.StatusOK, map[string]interface{}{
+                                "status": "deleted",
+                                "book":   book,
+                        })
+                }</span>
+        }
+
+        <span class="cov8" title="1">return c.JSON(http.StatusBadRequest, map[string]interface{}{
+                "status": "book not found",
+                "book":   nil,
+        })</span>
+}
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package controllers
+
+import (
+        "fmt"
+        "github.com/arioki1/alterra-agmc/day7/lib/database"
+        "github.com/arioki1/alterra-agmc/day7/models"
+        "net/http"
+        "strconv"
+
+        "github.com/labstack/echo"
+)
+
+func GetUserControllers(c echo.Context) error <span class="cov8" title="1">{
+        users, e := database.GetUsers()
+
+        if e != nil </span><span class="cov8" title="1">{
+                return echo.NewHTTPError(http.StatusInternalServerError, e.Error())
+        }</span>
+        <span class="cov8" title="1">return c.JSON(http.StatusOK, map[string]interface{}{
+                "status": "success",
+                "users":  users,
+        })</span>
+}
+
+func CreateUserControllers(c echo.Context) error <span class="cov8" title="1">{
+        var user models.Users
+        if err := c.Bind(&amp;user); err != nil </span><span class="cov0" title="0">{
+                return c.JSON(http.StatusBadRequest, map[string]interface{}{
+                        "status": "Invalid JSON body",
+                        "users":  nil,
+                })
+        }</span>
+
+        <span class="cov8" title="1">if err := user.Validation(); err != nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, map[string]interface{}{
+                        "status": err.Error(),
+                        "user":   nil,
+                })
+        }</span>
+
+        <span class="cov8" title="1">users, e := database.CreateUsers(&amp;user)
+        if e != nil </span><span class="cov0" title="0">{
+                return echo.NewHTTPError(http.StatusInternalServerError, e.Error())
+        }</span>
+        <span class="cov8" title="1">return c.JSON(http.StatusOK, map[string]interface{}{
+                "status": "created",
+                "users":  users,
+        })</span>
+}
+
+func GetUserByIdControllers(c echo.Context) error <span class="cov8" title="1">{
+        idParams := c.Param("id")
+        id, err := strconv.Atoi(idParams)
+        if err != nil </span><span class="cov0" title="0">{
+                return c.JSON(http.StatusBadRequest, map[string]interface{}{
+                        "status": "Invalid params",
+                        "user":   nil,
+                })
+        }</span>
+
+        <span class="cov8" title="1">users, e := database.GetUserById(&amp;id)
+        if e != nil </span><span class="cov8" title="1">{
+                if e.Error() == "record not found" </span><span class="cov8" title="1">{
+                        return c.JSON(http.StatusBadRequest, map[string]interface{}{
+                                "status": "user not found",
+                                "user":   nil,
+                        })
+                }</span> else<span class="cov0" title="0"> {
+                        return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+                                "status": e.Error(),
+                                "user":   nil,
+                        })
+                }</span>
+        }
+        <span class="cov8" title="1">return c.JSON(http.StatusOK, map[string]interface{}{
+                "status": "success",
+                "user":   users,
+        })</span>
+}
+
+func UpdateUserByIdControllers(c echo.Context) error <span class="cov8" title="1">{
+        idParams := c.Param("id")
+        id, err := strconv.Atoi(idParams)
+        if err != nil </span><span class="cov0" title="0">{
+                return c.JSON(http.StatusBadRequest, map[string]interface{}{
+                        "status": "Invalid params",
+                        "user":   nil,
+                })
+        }</span>
+
+        <span class="cov8" title="1">if id != getUserId(c) </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, map[string]interface{}{
+                        "status": "you can edit your own data only",
+                        "user":   nil,
+                })
+        }</span>
+
+        <span class="cov8" title="1">var user models.Users
+        if err := c.Bind(&amp;user); err != nil </span><span class="cov0" title="0">{
+                return c.JSON(http.StatusBadRequest, map[string]interface{}{
+                        "status": "Invalid JSON body",
+                        "users":  nil,
+                })
+        }</span>
+        <span class="cov8" title="1">newUser := new(models.Users)
+        newUser.ID = uint(id)
+        newUser.Name = user.Name
+        newUser.Email = user.Email
+        newUser.Password = user.Password
+
+        result, e := database.UpdateUser(newUser)
+        if e != nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, map[string]interface{}{
+                        "status": e.Error(),
+                        "user":   nil,
+                })
+        }</span>
+
+        <span class="cov8" title="1">return c.JSON(http.StatusOK, map[string]interface{}{
+                "status": "success",
+                "user":   result,
+        })</span>
+}
+
+func DeleteUserByIdControllers(c echo.Context) error <span class="cov8" title="1">{
+        idParams := c.Param("id")
+        id, err := strconv.Atoi(idParams)
+        if err != nil </span><span class="cov0" title="0">{
+                return c.JSON(http.StatusBadRequest, map[string]interface{}{
+                        "status": "Invalid params",
+                        "user":   nil,
+                })
+        }</span>
+
+        <span class="cov8" title="1">if id != getUserId(c) </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, map[string]interface{}{
+                        "status": "you can delete your own data only",
+                        "user":   nil,
+                })
+        }</span>
+
+        <span class="cov8" title="1">if e := database.DeleteUser(&amp;id); e != nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, map[string]interface{}{
+                        "status": e.Error(),
+                        "user":   nil,
+                })
+        }</span>
+
+        <span class="cov8" title="1">return c.JSON(http.StatusOK, map[string]interface{}{
+                "status": "deleted",
+                "user":   nil,
+        })</span>
+}
+
+func LoginUsersControllers(c echo.Context) error <span class="cov8" title="1">{
+        user := models.Users{}
+        c.Bind(&amp;user)
+        users, e := database.LoginUsers(&amp;user)
+
+        if e != nil </span><span class="cov8" title="1">{
+                if e.Error() == "record not found" </span><span class="cov8" title="1">{
+                        return echo.NewHTTPError(http.StatusBadRequest, "wrong email or password")
+                }</span> else<span class="cov0" title="0"> {
+                        return echo.NewHTTPError(http.StatusInternalServerError, e.Error())
+                }</span>
+        }
+        <span class="cov8" title="1">user.Password = ""
+        return c.JSON(http.StatusOK, map[string]interface{}{
+                "status": "success login",
+                "users":  users,
+        })</span>
+
+}
+
+func getUserId(c echo.Context) int <span class="cov8" title="1">{
+        var id int
+        userId := c.Get("userId")
+        if userId != nil </span><span class="cov8" title="1">{
+                i, err := strconv.Atoi(fmt.Sprintf("%v", userId))
+                if err == nil </span><span class="cov8" title="1">{
+                        id = i
+                }</span>
+        }
+        <span class="cov8" title="1">return id</span>
+}
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>
