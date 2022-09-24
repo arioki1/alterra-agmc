@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy Day 7
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  build:
+  build-day7:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -19,3 +19,4 @@ jobs:
           heroku_app_name: "agmc-alterra-day7" #Must be unique in Heroku
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           usedocker: true
+          force: true
