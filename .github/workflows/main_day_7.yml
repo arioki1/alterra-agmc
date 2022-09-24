@@ -13,19 +13,22 @@ jobs:
         working-directory: ./day7
     steps:
       - uses: actions/checkout@v2
-      - shell: bash
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        name: setup heroku
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_TOKEN}}
+          heroku_app_name: ${{secrets.HEROKU_PROJECT_DAY7_NAME}} #Must be unique in Heroku
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          justlogin: true
+      - name: setup project
         run: |
           ls -lah
-          curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
           heroku --version
           git config --global user.email ${{secrets.HEROKU_EMAIL}}
           git config --global user.name ${{secrets.HEROKU_NAME}}
           git config --global init.defaultBranch master
           git init && git add . && git commit -m "deploy to heroku"
-      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_TOKEN}}
-          heroku_app_name: ${{secrets.HEROKU_PROJECT_DAY7_NAME}} #Must be unique in Heroku
-          heroku_email: ${{secrets.HEROKU_EMAIL}}
-          usedocker: true
-          dontuseforce: false
+      - name: push project
+        run: |
+          ls -lah
+          git push heroku master --force
