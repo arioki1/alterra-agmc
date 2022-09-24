@@ -31,5 +31,6 @@ jobs:
           git init && git add . && git commit -m "deploy to heroku"
       - name: push project
         run: |
+          git remote -v
           ls -lah
           git push heroku master --force
