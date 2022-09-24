@@ -17,13 +17,14 @@ jobs:
         name: setup heroku
         with:
           heroku_api_key: ${{secrets.HEROKU_API_TOKEN}}
-          heroku_app_name: ${{secrets.HEROKU_PROJECT_DAY7_NAME}} #Must be unique in Heroku
+          heroku_app_name: ${{secrets.HEROKU_PROJECT_DAY7_NAME}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           justlogin: true
       - name: setup project
         run: |
           ls -lah
           heroku --version
+          heroku git:remote -a ${{secrets.HEROKU_PROJECT_DAY7_NAME}}
           git config --global user.email ${{secrets.HEROKU_EMAIL}}
           git config --global user.name ${{secrets.HEROKU_NAME}}
           git config --global init.defaultBranch master
