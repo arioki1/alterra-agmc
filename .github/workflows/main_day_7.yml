@@ -16,12 +16,11 @@ jobs:
       - shell: bash
         run: |
           ls -lah
+          curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+          heroku --version
           git config --global user.email ${{secrets.HEROKU_EMAIL}}
           git config --global user.name ${{secrets.HEROKU_NAME}}
           git init && git add . && git commit -m "deploy to heroku"
-      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_TOKEN}}
-          heroku_app_name: "agmc-alterra-day7" #Must be unique in Heroku
-          heroku_email: ${{secrets.HEROKU_EMAIL}}
-          dontuseforce: false
+          git remote add day7 https://git.heroku.com/${{secrets.HEROKU_PROJECT_DAY7_NAME}}.git
+          export HEROKU_API_KEY="${{secrets.HEROKU_API_TOKEN}}"
+          git push day7 master --force
