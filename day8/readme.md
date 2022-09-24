@@ -7,6 +7,7 @@
 ![Screenshot](2.png)
 ### set environment variables
 ![Screenshot](3.png)
+
 ###  add a remote to your git repo
 ```shell
 heroku git:remote -a agmc-alterra-day8
