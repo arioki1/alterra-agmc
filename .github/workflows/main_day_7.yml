@@ -16,6 +16,7 @@ jobs:
       - shell: bash
         run: |
           ls -lah
+          git init && git add . && git commit -m "deploy to heroku"
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_TOKEN}}
