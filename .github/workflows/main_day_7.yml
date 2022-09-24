@@ -25,4 +25,4 @@ jobs:
           heroku_app_name: "agmc-alterra-day7" #Must be unique in Heroku
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           usedocker: true
-          force: true
+          dontuseforce: false
