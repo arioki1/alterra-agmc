@@ -19,6 +19,7 @@ jobs:
           echo https://git.heroku.com/${{secrets.TEST}}.git
           curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
           heroku --version
+          printf "machine api.heroku.com\n  login ${{secrets.HEROKU_EMAIL}}\n  password ${{secrets.HEROKU_API_TOKEN}}\nmachine git.heroku.com\n  login ${{secrets.HEROKU_EMAIL}}\n  password ${{secrets.HEROKU_API_TOKEN}}" > cat ~/.netrc
           git config --global user.email ${{secrets.HEROKU_EMAIL}}
           git config --global user.name ${{secrets.HEROKU_NAME}}
           git config --global init.defaultBranch master
