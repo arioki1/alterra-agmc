@@ -20,7 +20,7 @@ jobs:
           heroku_app_name: ${{secrets.HEROKU_PROJECT_DAY7_NAME}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           justlogin: true
-      - name: setup project
+      - name: setup project and push project
         run: |
           ls -lah
           heroku --version
@@ -29,8 +29,5 @@ jobs:
           git config --global user.name ${{secrets.HEROKU_NAME}}
           git config --global init.defaultBranch master
           git init && git add . && git commit -m "deploy to heroku"
-      - name: push project
-        run: |
           git remote -v
-          ls -lah
           git push heroku master --force
