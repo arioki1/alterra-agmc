@@ -1,0 +1,40 @@
+## deploy to heroku with github actions
+### github actions yml file
+```yaml
+name: Deploy Day 7
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-day7:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./day7
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        name: setup heroku
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_TOKEN}}
+          heroku_app_name: ${{secrets.HEROKU_PROJECT_DAY7_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          justlogin: true
+      - name: setup project
+        run: |
+          ls -lah
+          heroku --version
+          git config --global user.email ${{secrets.HEROKU_EMAIL}}
+          git config --global user.name ${{secrets.HEROKU_NAME}}
+          git config --global init.defaultBranch master
+          git init && git add . && git commit -m "${{github.event.head_commit.message}}"
+          heroku git:remote -a ${{secrets.HEROKU_PROJECT_DAY7_NAME}}
+      - name: push project
+        run: |
+          git push heroku master --force
+```
+### screenshot
+![img.png](img.png)
